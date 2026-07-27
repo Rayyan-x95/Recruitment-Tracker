@@ -1,5 +1,4 @@
 import React from 'react';
-import { API_BASE_URL } from '../api/axiosConfig';
 
 const Footer = () => {
     return (
@@ -26,12 +25,6 @@ const Footer = () => {
                     <div className="col-md-6 text-md-end text-muted small">
                         <div className="d-flex flex-wrap align-items-center justify-content-md-end gap-3 mb-1">
                             <a href="https://ninety5.in" target="_blank" rel="noreferrer" className="footer-link fw-bold text-primary">Ninety5.in</a>
-                            <span>•</span>
-                            <a href={`${API_BASE_URL.replace('/api', '')}/h2-console`} target="_blank" rel="noreferrer" className="footer-link">H2 Console</a>
-                            <span>•</span>
-                            <a href={`${API_BASE_URL}/candidates`} target="_blank" rel="noreferrer" className="footer-link">REST Endpoints</a>
-                            <span>•</span>
-                            <span className="text-secondary fw-semibold">Spring Boot 3 & React 19</span>
                         </div>
                         <p className="mb-0 text-secondary" style={{ fontSize: '0.78rem' }}>
                             &copy; {new Date().getFullYear()} RecTracker • A Product of <a href="https://ninety5.in" target="_blank" rel="noreferrer" className="text-decoration-none fw-bold text-dark">Ninety5.in</a>. All rights reserved.
