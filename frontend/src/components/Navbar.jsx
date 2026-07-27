@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { API_BASE_URL } from '../api/axiosConfig';
 
 const Navbar = () => {
     const { user, logout } = useAuth();
@@ -182,22 +181,6 @@ const Navbar = () => {
 
                                     <li><hr className="dropdown-divider my-1" /></li>
 
-                                    {/* System & Developer Tools Section */}
-                                    <li className="dropdown-header text-uppercase text-muted fw-bold px-3 pt-1 pb-1" style={{ fontSize: '0.65rem', letterSpacing: '0.5px' }}>
-                                        Developer & System Tools
-                                    </li>
-                                    <li>
-                                        <a className="dropdown-item py-2 small d-flex align-items-center gap-2" href={`${API_BASE_URL.replace('/api', '')}/h2-console`} target="_blank" rel="noreferrer" onClick={() => setDropdownOpen(false)}>
-                                            <i className="fa-solid fa-database text-secondary"></i>
-                                            <span>H2 Database Console</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a className="dropdown-item py-2 small d-flex align-items-center gap-2" href={`${API_BASE_URL}/candidates`} target="_blank" rel="noreferrer" onClick={() => setDropdownOpen(false)}>
-                                            <i className="fa-solid fa-code text-secondary"></i>
-                                            <span>REST API Endpoints</span>
-                                        </a>
-                                    </li>
                                     <li>
                                         <a className="dropdown-item py-2 small d-flex align-items-center gap-2" href="https://ninety5.in" target="_blank" rel="noreferrer" onClick={() => setDropdownOpen(false)}>
                                             <i className="fa-solid fa-globe text-primary"></i>
