@@ -37,13 +37,8 @@ const DashboardPage = () => {
     const [loading, setLoading] = useState(true);
 
     // Active Role View (defaults to user's assigned role or ADMIN)
-    const [activeRole, setActiveRole] = useState(user?.role?.toUpperCase() || 'ADMIN');
-
-    useEffect(() => {
-        if (user?.role) {
-            setActiveRole(user.role.toUpperCase());
-        }
-    }, [user]);
+    // Role determined strictly by user's account role selected during Signup
+    const userRole = (user?.role || 'RECRUITER').toUpperCase();
 
     useEffect(() => {
         fetchDashboardData();
@@ -78,7 +73,7 @@ const DashboardPage = () => {
                     <div className="spinner-border text-primary mb-3" role="status" style={{ width: '3rem', height: '3rem' }}>
                         <span className="visually-hidden">Loading Dashboard...</span>
                     </div>
-                    <h5 className="text-muted fw-semibold">Preparing {activeRole} Dashboard...</h5>
+                    <h5 className="text-muted fw-semibold">Preparing {userRole} Dashboard...</h5>
                 </div>
             </div>
         );
@@ -132,52 +127,23 @@ const DashboardPage = () => {
 
     return (
         <div className="container-fluid px-lg-4 py-4">
-            {/* Header & Role Switcher */}
+            {/* Header & Account Role Indicator */}
             <div className="d-flex flex-wrap align-items-center justify-content-between mb-4 gap-3">
                 <div>
                     <div className="d-flex align-items-center gap-2 mb-1">
                         <h3 className="fw-bold mb-0 text-dark">
                             <i className="fa-solid fa-gauge-high text-primary me-2"></i>Recruitment Dashboard
                         </h3>
-                        {renderRoleBadge(activeRole)}
+                        {renderRoleBadge(userRole)}
                     </div>
                     <p className="text-muted mb-0">
-                        Tailored workspace for <strong>{user?.fullName || user?.username || 'User'}</strong> ({activeRole})
+                        Tailored workspace for <strong>{user?.fullName || user?.username || 'User'}</strong> ({userRole} Account)
                     </p>
-                </div>
-
-                {/* Role Switching Selector */}
-                <div className="d-flex align-items-center bg-light p-1 rounded-3 border">
-                    <span className="small text-muted fw-semibold me-2 ms-2"><i className="fa-solid fa-sliders me-1"></i> Switch Role View:</span>
-                    <div className="btn-group btn-group-sm" role="group">
-                        <button
-                            type="button"
-                            className={`btn ${activeRole === 'ADMIN' ? 'btn-danger fw-bold' : 'btn-outline-secondary'}`}
-                            onClick={() => setActiveRole('ADMIN')}
-                        >
-                            <i className="fa-solid fa-user-shield me-1"></i> Admin
-                        </button>
-                        <button
-                            type="button"
-                            className={`btn ${activeRole === 'RECRUITER' ? 'btn-primary fw-bold' : 'btn-outline-secondary'}`}
-                            onClick={() => setActiveRole('RECRUITER')}
-                        >
-                            <i className="fa-solid fa-user-tie me-1"></i> Recruiter
-                        </button>
-                        <button
-                            type="button"
-                            className={`btn ${activeRole === 'INTERVIEWER' ? 'btn-indigo fw-bold text-white' : 'btn-outline-secondary'}`}
-                            style={activeRole === 'INTERVIEWER' ? { backgroundColor: '#6366f1' } : {}}
-                            onClick={() => setActiveRole('INTERVIEWER')}
-                        >
-                            <i className="fa-solid fa-clipboard-check me-1"></i> Interviewer
-                        </button>
-                    </div>
                 </div>
             </div>
 
             {/* ==================== 1. ADMIN DASHBOARD ==================== */}
-            {activeRole === 'ADMIN' && (
+            {userRole === 'ADMIN' && (
                 <>
                     {/* Admin Action Buttons */}
                     <div className="d-flex gap-2 mb-4">
@@ -327,7 +293,7 @@ const DashboardPage = () => {
             )}
 
             {/* ==================== 2. RECRUITER DASHBOARD ==================== */}
-            {activeRole === 'RECRUITER' && (
+            {userRole === 'RECRUITER' && (
                 <>
                     {/* Recruiter Banner & Actions */}
                     <div className="card border-0 bg-primary-subtle text-primary-emphasis p-4 mb-4 rounded-4 shadow-sm">
@@ -431,7 +397,7 @@ const DashboardPage = () => {
             )}
 
             {/* ==================== 3. INTERVIEWER DASHBOARD ==================== */}
-            {activeRole === 'INTERVIEWER' && (
+            {userRole === 'INTERVIEWER' && (
                 <>
                     {/* Interviewer Welcome Banner */}
                     <div className="card border-0 text-white p-4 mb-4 rounded-4 shadow-sm" style={{ background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)' }}>
