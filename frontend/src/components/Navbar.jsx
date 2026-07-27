@@ -1,12 +1,30 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [mobileNavOpen, setMobileNavOpen] = useState(false);
+    const dropdownRef = useRef(null);
+
+    // Close dropdown when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setDropdownOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
     const handleLogout = async () => {
+        setDropdownOpen(false);
         await logout();
         navigate('/login');
     };
@@ -39,58 +57,76 @@ const Navbar = () => {
                     <button 
                         className="navbar-toggler border-0 shadow-none px-2" 
                         type="button" 
-                        data-bs-toggle="collapse" 
-                        data-bs-target="#navbarMain"
-                        aria-controls="navbarMain"
-                        aria-expanded="false"
+                        onClick={() => setMobileNavOpen(!mobileNavOpen)}
+                        aria-expanded={mobileNavOpen}
                         aria-label="Toggle navigation"
                     >
                         <i className="fa-solid fa-bars-staggered text-secondary fs-5"></i>
                     </button>
 
                     {/* Navigation Links */}
-                    <div className="collapse navbar-collapse" id="navbarMain">
+                    <div className={`collapse navbar-collapse ${mobileNavOpen ? 'show' : ''}`} id="navbarMain">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0 nav-pills-minimal gap-lg-1">
                             <li className="nav-item">
-                                <NavLink className={({ isActive }) => `nav-link-minimal ${isActive ? 'active' : ''}`} to="/dashboard">
+                                <NavLink 
+                                    className={({ isActive }) => `nav-link-minimal ${isActive ? 'active' : ''}`} 
+                                    to="/dashboard"
+                                    onClick={() => setMobileNavOpen(false)}
+                                >
                                     <i className="fa-solid fa-chart-pie me-2"></i>
                                     <span>Dashboard</span>
                                 </NavLink>
                             </li>
                             <li className="nav-item">
-                                <NavLink className={({ isActive }) => `nav-link-minimal ${isActive ? 'active' : ''}`} to="/candidates">
+                                <NavLink 
+                                    className={({ isActive }) => `nav-link-minimal ${isActive ? 'active' : ''}`} 
+                                    to="/candidates"
+                                    onClick={() => setMobileNavOpen(false)}
+                                >
                                     <i className="fa-solid fa-user-group me-2"></i>
                                     <span>Candidates</span>
                                 </NavLink>
                             </li>
                             <li className="nav-item">
-                                <NavLink className={({ isActive }) => `nav-link-minimal ${isActive ? 'active' : ''}`} to="/interviews">
+                                <NavLink 
+                                    className={({ isActive }) => `nav-link-minimal ${isActive ? 'active' : ''}`} 
+                                    to="/interviews"
+                                    onClick={() => setMobileNavOpen(false)}
+                                >
                                     <i className="fa-solid fa-calendar-alt me-2"></i>
                                     <span>Interviews</span>
                                 </NavLink>
                             </li>
                             <li className="nav-item">
-                                <NavLink className={({ isActive }) => `nav-link-minimal ${isActive ? 'active' : ''}`} to="/feedbacks">
+                                <NavLink 
+                                    className={({ isActive }) => `nav-link-minimal ${isActive ? 'active' : ''}`} 
+                                    to="/feedbacks"
+                                    onClick={() => setMobileNavOpen(false)}
+                                >
                                     <i className="fa-solid fa-clipboard-check me-2"></i>
                                     <span>Feedbacks</span>
                                 </NavLink>
                             </li>
                             <li className="nav-item">
-                                <NavLink className={({ isActive }) => `nav-link-minimal ${isActive ? 'active' : ''}`} to="/offers">
+                                <NavLink 
+                                    className={({ isActive }) => `nav-link-minimal ${isActive ? 'active' : ''}`} 
+                                    to="/offers"
+                                    onClick={() => setMobileNavOpen(false)}
+                                >
                                     <i className="fa-solid fa-file-contract me-2"></i>
                                     <span>Offers</span>
                                 </NavLink>
                             </li>
                         </ul>
 
-                        {/* Right User Actions */}
+                        {/* Right User Actions & Profile Dropdown */}
                         <div className="d-flex align-items-center gap-3 pt-2 pt-lg-0">
-                            <div className="dropdown">
+                            <div className="dropdown position-relative" ref={dropdownRef}>
                                 <button 
-                                    className="btn user-profile-btn dropdown-toggle d-flex align-items-center gap-2" 
+                                    className="btn user-profile-btn d-flex align-items-center gap-2" 
                                     type="button" 
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
+                                    onClick={() => setDropdownOpen(!dropdownOpen)}
+                                    aria-expanded={dropdownOpen}
                                 >
                                     <div className="avatar-circle">
                                         {getInitials(user.fullName || user.email)}
@@ -99,22 +135,22 @@ const Navbar = () => {
                                         <span className="user-name-text">{user.fullName || 'User'}</span>
                                         <span className="user-role-sub">{user.role || 'ADMIN'}</span>
                                     </div>
-                                    <i className="fa-solid fa-chevron-down text-muted fs-xs ms-1"></i>
+                                    <i className={`fa-solid fa-chevron-down text-muted fs-xs ms-1 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`}></i>
                                 </button>
 
-                                <ul className="dropdown-menu dropdown-menu-end dropdown-menu-minimal shadow-sm border mt-2">
+                                <ul className={`dropdown-menu dropdown-menu-end dropdown-menu-minimal shadow border mt-2 ${dropdownOpen ? 'show' : ''}`} style={{ position: 'absolute', right: 0, top: '100%', zIndex: 1050 }}>
                                     <li className="px-3 py-2 border-bottom bg-light-subtle">
                                         <p className="fw-semibold mb-0 text-dark small">{user.fullName}</p>
-                                        <p className="text-muted mb-0 small text-truncate" style={{ maxWidth: '200px' }}>{user.email}</p>
+                                        <p className="text-muted mb-0 small text-truncate" style={{ maxWidth: '220px' }}>{user.email}</p>
                                     </li>
                                     <li>
-                                        <a className="dropdown-item py-2 small d-flex align-items-center gap-2" href="http://localhost:8080/h2-console" target="_blank" rel="noreferrer">
+                                        <a className="dropdown-item py-2 small d-flex align-items-center gap-2" href="http://localhost:8080/h2-console" target="_blank" rel="noreferrer" onClick={() => setDropdownOpen(false)}>
                                             <i className="fa-solid fa-database text-muted"></i>
                                             <span>H2 Database Console</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a className="dropdown-item py-2 small d-flex align-items-center gap-2" href="http://localhost:8080/api/candidates" target="_blank" rel="noreferrer">
+                                        <a className="dropdown-item py-2 small d-flex align-items-center gap-2" href="http://localhost:8080/api/candidates" target="_blank" rel="noreferrer" onClick={() => setDropdownOpen(false)}>
                                             <i className="fa-solid fa-code text-muted"></i>
                                             <span>REST API Status</span>
                                         </a>

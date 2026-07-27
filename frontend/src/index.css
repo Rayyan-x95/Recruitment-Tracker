@@ -169,6 +169,19 @@ body {
     border: 1px solid #e2e8f0;
     box-shadow: var(--shadow-lg) !important;
     padding: 0.4rem 0;
+    min-width: 230px;
+}
+
+.transition-transform {
+    transition: transform 0.2s ease;
+}
+
+.rotate-180 {
+    transform: rotate(180deg);
+}
+
+.fs-xs {
+    font-size: 0.72rem;
 }
 
 /* Footer Minimal */
