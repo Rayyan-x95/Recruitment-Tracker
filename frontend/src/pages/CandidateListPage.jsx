@@ -61,7 +61,7 @@ const CandidateListPage = () => {
             <div className="d-flex flex-wrap align-items-center justify-content-between mb-4 gap-3">
                 <div>
                     <h3 className="fw-bold mb-1 text-dark">
-                        <i className="fa-solid fa-users text-primary me-2"></i>Candidate Directory
+                        Candidate Directory
                     </h3>
                     <p className="text-muted mb-0">Search, filter, and sort candidate records, real technical profiles, and resumes.</p>
                 </div>

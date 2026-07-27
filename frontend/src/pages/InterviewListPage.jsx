@@ -102,7 +102,7 @@ const InterviewListPage = () => {
             <div className="d-flex flex-wrap align-items-center justify-content-between mb-4 gap-3">
                 <div>
                     <h3 className="fw-bold mb-1 text-dark">
-                        <i className="fa-solid fa-calendar-check text-primary me-2"></i>Interview Management
+                        Interview Management
                     </h3>
                     <p className="text-muted mb-0">Schedule interview rounds, assign interviewers, and track evaluations.</p>
                 </div>

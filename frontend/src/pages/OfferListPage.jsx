@@ -94,7 +94,7 @@ const OfferListPage = () => {
             <div className="d-flex flex-wrap align-items-center justify-content-between mb-4 gap-3">
                 <div>
                     <h3 className="fw-bold mb-1 text-dark">
-                        <i className="fa-solid fa-file-signature text-primary me-2"></i>Job Offer Management
+                        Job Offer Management
                     </h3>
                     <p className="text-muted mb-0">Issue job offers, track proposed CTC, joining dates, and offer acceptance status.</p>
                 </div>

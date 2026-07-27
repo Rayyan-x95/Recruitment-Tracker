@@ -299,7 +299,7 @@ const DashboardPage = () => {
                     <div className="card border-0 bg-primary-subtle text-primary-emphasis p-4 mb-4 rounded-4 shadow-sm">
                         <div className="d-flex flex-wrap align-items-center justify-content-between gap-3">
                             <div>
-                                <h4 className="fw-bold mb-1"><i className="fa-solid fa-users-viewfinder me-2"></i>Recruiter Sourcing & Pipeline Operations</h4>
+                                <h4 className="fw-bold mb-1">Recruiter Sourcing & Pipeline Operations</h4>
                                 <p className="mb-0 text-muted">Manage candidate intake, progress stages, and push top talent to interview rounds.</p>
                             </div>
                             <div className="d-flex gap-2">
@@ -403,7 +403,7 @@ const DashboardPage = () => {
                     <div className="card border-0 text-white p-4 mb-4 rounded-4 shadow-sm" style={{ background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)' }}>
                         <div className="d-flex flex-wrap align-items-center justify-content-between gap-3">
                             <div>
-                                <h4 className="fw-bold mb-1"><i className="fa-solid fa-user-pen me-2"></i>Interviewer Evaluation Workspace</h4>
+                                <h4 className="fw-bold mb-1">Interviewer Evaluation Workspace</h4>
                                 <p className="mb-0 opacity-90">Review assigned candidate scorecards, conduct interviews, and submit ratings.</p>
                             </div>
                             <div className="d-flex gap-2">

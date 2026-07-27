@@ -88,7 +88,7 @@ const FeedbackListPage = () => {
             <div className="d-flex flex-wrap align-items-center justify-content-between mb-4 gap-3">
                 <div>
                     <h3 className="fw-bold mb-1 text-dark">
-                        <i className="fa-solid fa-comment-dots text-primary me-2"></i>Interview Evaluations & Feedback
+                        Interview Evaluations & Feedback
                     </h3>
                     <p className="text-muted mb-0">Detailed rating scores, technical assessments, and final recommendations.</p>
                 </div>
