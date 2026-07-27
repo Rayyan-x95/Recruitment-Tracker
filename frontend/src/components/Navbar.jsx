@@ -50,7 +50,10 @@ const Navbar = () => {
                         <div className="brand-icon-sq">
                             <i className="fa-solid fa-layer-group"></i>
                         </div>
-                        <span className="brand-text">RecTracker</span>
+                        <div className="d-flex flex-column lh-1">
+                            <span className="brand-text">RecTracker</span>
+                            <span className="text-muted fw-semibold" style={{ fontSize: '0.62rem', letterSpacing: '0.4px' }}>by Ninety5.in</span>
+                        </div>
                     </Link>
 
                     {/* Mobile Toggler */}
