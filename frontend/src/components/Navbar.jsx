@@ -47,9 +47,7 @@ const Navbar = () => {
                 <div className="container-fluid px-lg-4">
                     {/* Brand */}
                     <Link className="navbar-brand-minimal me-lg-4" to="/dashboard">
-                        <div className="brand-icon-sq">
-                            <i className="fa-solid fa-layer-group"></i>
-                        </div>
+                        <img src="/favicon.svg" alt="RecTracker Logo" style={{ width: '36px', height: '36px', borderRadius: '10px' }} className="shadow-sm" />
                         <div className="d-flex flex-column lh-1">
                             <span className="brand-text">RecTracker</span>
                             <span className="text-muted fw-semibold" style={{ fontSize: '0.62rem', letterSpacing: '0.4px' }}>by Ninety5.in</span>

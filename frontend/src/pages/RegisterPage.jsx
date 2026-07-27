@@ -37,9 +37,10 @@ const RegisterPage = () => {
         <div className="auth-container">
             <div className="auth-card">
                 <div className="text-center mb-3">
-                    <h2 className="fw-bold text-dark">
-                        <i className="fa-solid fa-user-plus text-primary me-2"></i>Create Account
-                    </h2>
+                    <div className="d-flex align-items-center justify-content-center gap-2 mb-2">
+                        <img src="/favicon.svg" alt="RecTracker Logo" style={{ width: '42px', height: '42px', borderRadius: '12px' }} />
+                        <h2 className="fw-bold text-dark mb-0">Create Account</h2>
+                    </div>
                     <p className="text-muted">Join the Recruitment Portal</p>
                 </div>
 

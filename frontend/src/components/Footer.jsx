@@ -9,9 +9,7 @@ const Footer = () => {
                     {/* Left: Brand & Status */}
                     <div className="col-md-6 d-flex flex-wrap align-items-center gap-3">
                         <div className="d-flex align-items-center gap-2">
-                            <div className="brand-icon-sm">
-                                <i className="fa-solid fa-layer-group"></i>
-                            </div>
+                            <img src="/favicon.svg" alt="RecTracker Logo" style={{ width: '28px', height: '28px', borderRadius: '8px' }} />
                             <div className="d-flex flex-column lh-1">
                                 <span className="fw-bold text-dark fs-6">RecTracker</span>
                                 <a href="https://ninety5.in" target="_blank" rel="noreferrer" className="text-decoration-none text-muted fw-semibold" style={{ fontSize: '0.65rem' }}>A Product of Ninety5.in</a>

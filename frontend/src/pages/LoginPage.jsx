@@ -28,9 +28,10 @@ const LoginPage = () => {
         <div className="auth-container">
             <div className="auth-card">
                 <div className="text-center mb-4">
-                    <h2 className="fw-bold text-dark">
-                        <i className="fa-solid fa-briefcase text-primary me-2"></i>RecTracker
-                    </h2>
+                    <div className="d-flex align-items-center justify-content-center gap-2 mb-2">
+                        <img src="/favicon.svg" alt="RecTracker Logo" style={{ width: '42px', height: '42px', borderRadius: '12px' }} />
+                        <h2 className="fw-bold text-dark mb-0">RecTracker</h2>
+                    </div>
                     <p className="text-muted mb-2">Sign in to your Recruitment Portal</p>
                     <span className="badge bg-indigo-subtle text-primary border border-primary-subtle rounded-pill px-3 py-1 fw-bold small">
                         <i className="fa-solid fa-bolt me-1"></i> Powered by Supabase Auth
