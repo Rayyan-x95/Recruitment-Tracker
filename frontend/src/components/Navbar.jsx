@@ -51,7 +51,6 @@ const Navbar = () => {
                             <i className="fa-solid fa-layer-group"></i>
                         </div>
                         <span className="brand-text">RecTracker</span>
-                        <span className="brand-badge">Enterprise</span>
                     </Link>
 
                     {/* Mobile Toggler */}
