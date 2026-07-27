@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import api from '../api/axiosConfig';
+import api, { API_BASE_URL } from '../api/axiosConfig';
 
 const CandidateListPage = () => {
     const [candidates, setCandidates] = useState([]);
@@ -208,7 +208,7 @@ const CandidateListPage = () => {
                                         <td>
                                             {c.resumePath ? (
                                                 <a
-                                                    href={`http://localhost:8080/api/candidates/${c.id}/resume`}
+                                                    href={`${API_BASE_URL}/candidates/${c.id}/resume`}
                                                     target="_blank"
                                                     rel="noreferrer"
                                                     className="btn btn-sm btn-outline-primary py-0 px-2 rounded-2"

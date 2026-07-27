@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import api from '../api/axiosConfig';
+import api, { API_BASE_URL } from '../api/axiosConfig';
 
 const CandidateDetailPage = () => {
     const { id } = useParams();
@@ -57,7 +57,7 @@ const CandidateDetailPage = () => {
                 <div className="d-flex gap-2">
                     {candidate.resumePath && (
                         <a
-                            href={`http://localhost:8080/api/candidates/${candidate.id}/resume`}
+                            href={`${API_BASE_URL}/candidates/${candidate.id}/resume`}
                             target="_blank"
                             rel="noreferrer"
                             className="btn btn-outline-primary fw-semibold rounded-3"
