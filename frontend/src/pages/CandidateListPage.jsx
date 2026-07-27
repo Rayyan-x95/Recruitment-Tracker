@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../api/axiosConfig';
 
@@ -12,11 +12,7 @@ const CandidateListPage = () => {
     const [sortBy, setSortBy] = useState('createdAt');
     const [sortDir, setSortDir] = useState('desc');
 
-    useEffect(() => {
-        fetchCandidates();
-    }, [status, sortBy, sortDir]);
-
-    const fetchCandidates = async () => {
+    const fetchCandidates = useCallback(async () => {
         setLoading(true);
         try {
             const params = {};
@@ -33,7 +29,11 @@ const CandidateListPage = () => {
         } finally {
             setLoading(false);
         }
-    };
+    }, [keyword, status, minExp, sortBy, sortDir]);
+
+    useEffect(() => {
+        fetchCandidates();
+    }, [fetchCandidates]);
 
     const handleSearchSubmit = (e) => {
         e.preventDefault();
@@ -46,6 +46,7 @@ const CandidateListPage = () => {
             await api.delete(`/candidates/${id}`);
             fetchCandidates();
         } catch (err) {
+            console.error('Failed to delete candidate:', err);
             alert('Failed to delete candidate');
         }
     };
@@ -116,12 +117,22 @@ const CandidateListPage = () => {
 
                         <div className="col-lg-2 col-md-6">
                             <label className="form-label fw-semibold">Sort By</label>
-                            <select className="form-select" value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-                                <option value="createdAt">Date Applied</option>
-                                <option value="name">Candidate Name</option>
-                                <option value="experience">Experience</option>
-                                <option value="status">Pipeline Status</option>
-                            </select>
+                            <div className="input-group">
+                                <select className="form-select" value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+                                    <option value="createdAt">Date Applied</option>
+                                    <option value="name">Candidate Name</option>
+                                    <option value="experience">Experience</option>
+                                    <option value="status">Pipeline Status</option>
+                                </select>
+                                <button
+                                    type="button"
+                                    className="btn btn-outline-secondary"
+                                    onClick={() => setSortDir(prev => prev === 'asc' ? 'desc' : 'asc')}
+                                    title={`Sort Direction: ${sortDir.toUpperCase()}`}
+                                >
+                                    <i className={`fa-solid fa-arrow-${sortDir === 'asc' ? 'up-a-z' : 'down-z-a'}`}></i>
+                                </button>
+                            </div>
                         </div>
 
                         <div className="col-lg-2 col-md-6 d-flex gap-2">
@@ -131,7 +142,7 @@ const CandidateListPage = () => {
                             <button
                                 type="button"
                                 className="btn btn-outline-secondary"
-                                onClick={() => { setKeyword(''); setStatus(''); setMinExp(''); setSortBy('createdAt'); }}
+                                onClick={() => { setKeyword(''); setStatus(''); setMinExp(''); setSortBy('createdAt'); setSortDir('desc'); }}
                                 title="Reset Filters"
                             >
                                 <i className="fa-solid fa-rotate"></i>

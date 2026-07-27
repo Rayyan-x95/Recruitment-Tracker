@@ -78,6 +78,7 @@ const FeedbackListPage = () => {
             setShowModal(false);
             fetchFeedbacks();
         } catch (err) {
+            console.error('Failed to submit feedback:', err);
             alert('Failed to submit feedback');
         }
     };

@@ -2,11 +2,38 @@ import React from 'react';
 
 const Footer = () => {
     return (
-        <footer className="mt-auto py-3 bg-white border-top text-center text-muted">
-            <div className="container">
-                <p className="mb-0">
-                    &copy; 2026 Recruitment Tracker Application. Powered by React 19, Spring Boot REST API & MySQL.
-                </p>
+        <footer className="footer-minimal mt-auto border-top bg-white py-4">
+            <div className="container-fluid px-lg-4">
+                <div className="row align-items-center gy-3">
+                    {/* Left: Brand & Status */}
+                    <div className="col-md-6 d-flex flex-wrap align-items-center gap-3">
+                        <div className="d-flex align-items-center gap-2">
+                            <div className="brand-icon-sm">
+                                <i className="fa-solid fa-layer-group"></i>
+                            </div>
+                            <span className="fw-bold text-dark fs-6">RecTracker</span>
+                        </div>
+                        <span className="text-muted d-none d-sm-inline">|</span>
+                        <div className="d-flex align-items-center gap-2 text-muted small">
+                            <span className="status-dot-green"></span>
+                            <span>All Systems Operational</span>
+                        </div>
+                    </div>
+
+                    {/* Right: Technical Specs & Copyright */}
+                    <div className="col-md-6 text-md-end text-muted small">
+                        <div className="d-flex flex-wrap align-items-center justify-content-md-end gap-3 mb-1">
+                            <a href="http://localhost:8080/h2-console" target="_blank" rel="noreferrer" className="footer-link">H2 Console</a>
+                            <span>•</span>
+                            <a href="http://localhost:8080/api/candidates" target="_blank" rel="noreferrer" className="footer-link">REST Endpoints</a>
+                            <span>•</span>
+                            <span className="text-secondary fw-semibold">Spring Boot & React 19</span>
+                        </div>
+                        <p className="mb-0 text-secondary" style={{ fontSize: '0.78rem' }}>
+                            &copy; {new Date().getFullYear()} Recruitment Tracker Platform. All rights reserved.
+                        </p>
+                    </div>
+                </div>
             </div>
         </footer>
     );

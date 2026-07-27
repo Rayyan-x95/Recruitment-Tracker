@@ -24,18 +24,18 @@ const CandidateFormPage = () => {
 
     useEffect(() => {
         if (isEdit) {
+            const fetchCandidate = async () => {
+                try {
+                    const res = await api.get(`/candidates/${id}`);
+                    setCandidate(res.data);
+                } catch (err) {
+                    console.error('Failed to fetch candidate details:', err);
+                    setError('Failed to fetch candidate details');
+                }
+            };
             fetchCandidate();
         }
-    }, [id]);
-
-    const fetchCandidate = async () => {
-        try {
-            const res = await api.get(`/candidates/${id}`);
-            setCandidate(res.data);
-        } catch (err) {
-            setError('Failed to fetch candidate details');
-        }
-    };
+    }, [id, isEdit]);
 
     const handleChange = (e) => {
         setCandidate({ ...candidate, [e.target.name]: e.target.value });

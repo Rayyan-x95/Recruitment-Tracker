@@ -63,6 +63,7 @@ const OfferListPage = () => {
             setShowModal(false);
             fetchOffers();
         } catch (err) {
+            console.error('Failed to generate offer:', err);
             alert('Failed to generate offer');
         }
     };
@@ -72,6 +73,7 @@ const OfferListPage = () => {
             await api.patch(`/offers/${id}/status`, { status });
             fetchOffers();
         } catch (err) {
+            console.error('Error updating offer status:', err);
             alert('Error updating offer status');
         }
     };
@@ -82,6 +84,7 @@ const OfferListPage = () => {
             await api.delete(`/offers/${id}`);
             fetchOffers();
         } catch (err) {
+            console.error('Failed to delete offer:', err);
             alert('Failed to delete offer');
         }
     };

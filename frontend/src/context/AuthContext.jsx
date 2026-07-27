@@ -25,8 +25,8 @@ export const AuthProvider = ({ children }) => {
         const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
             if (session?.user) {
                 setUser(formatSupabaseUser(session.user));
-            } else if (!user) {
-                setUser(null);
+            } else {
+                setUser(prevUser => (prevUser ? prevUser : null));
             }
             setLoading(false);
         });
@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }) => {
         try {
             const res = await api.get('/auth/me');
             setUser(res.data);
-        } catch (err) {
+        } catch {
             setUser(null);
         } finally {
             setLoading(false);
@@ -74,7 +74,7 @@ export const AuthProvider = ({ children }) => {
                 const backendUser = res.data.user;
                 setUser(backendUser);
                 return { user: backendUser };
-            } catch (backendErr) {
+            } catch {
                 throw new Error(error.message || 'Invalid username/email or password');
             }
         }

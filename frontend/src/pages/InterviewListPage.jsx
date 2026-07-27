@@ -81,6 +81,7 @@ const InterviewListPage = () => {
             setShowModal(false);
             fetchInterviews();
         } catch (err) {
+            console.error('Error saving interview schedule:', err);
             alert('Error saving interview schedule');
         }
     };
@@ -91,6 +92,7 @@ const InterviewListPage = () => {
             await api.delete(`/interviews/${id}`);
             fetchInterviews();
         } catch (err) {
+            console.error('Failed to delete interview:', err);
             alert('Failed to delete interview');
         }
     };

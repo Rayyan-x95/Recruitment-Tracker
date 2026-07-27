@@ -71,7 +71,7 @@ async function dbPush() {
     ];
 
     try {
-        const { data, error } = await supabase
+        const { error } = await supabase
             .from('candidates')
             .upsert(candidates, { onConflict: 'email' });
 

@@ -9,23 +9,23 @@ const CandidateDetailPage = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        const fetchCandidateDetail = async () => {
+            try {
+                const [candRes, intRes] = await Promise.all([
+                    api.get(`/candidates/${id}`),
+                    api.get(`/interviews?candidateId=${id}`)
+                ]);
+                setCandidate(candRes.data);
+                setInterviews(intRes.data);
+            } catch (err) {
+                console.error('Error fetching candidate details:', err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
         fetchCandidateDetail();
     }, [id]);
-
-    const fetchCandidateDetail = async () => {
-        try {
-            const [candRes, intRes] = await Promise.all([
-                api.get(`/candidates/${id}`),
-                api.get(`/interviews?candidateId=${id}`)
-            ]);
-            setCandidate(candRes.data);
-            setInterviews(intRes.data);
-        } catch (err) {
-            console.error('Error fetching candidate details:', err);
-        } finally {
-            setLoading(false);
-        }
-    };
 
     if (loading) {
         return (

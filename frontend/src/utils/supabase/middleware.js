@@ -12,7 +12,7 @@ export const createClient = (request) => {
         getAll() {
           return request?.cookies?.getAll ? request.cookies.getAll() : [];
         },
-        setAll(cookiesToSet) {
+        setAll(_cookiesToSet) {
           // Cookie handling logic
         },
       },
