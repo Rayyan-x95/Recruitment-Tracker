@@ -1,4 +1,5 @@
 import React from 'react';
+import { API_BASE_URL } from '../api/axiosConfig';
 
 const Footer = () => {
     return (
@@ -16,18 +17,18 @@ const Footer = () => {
                         <span className="text-muted d-none d-sm-inline">|</span>
                         <div className="d-flex align-items-center gap-2 text-muted small">
                             <span className="status-dot-green"></span>
-                            <span>All Systems Operational</span>
+                            <span className="fw-semibold text-dark">All Systems Operational</span>
                         </div>
                     </div>
 
                     {/* Right: Technical Specs & Copyright */}
                     <div className="col-md-6 text-md-end text-muted small">
                         <div className="d-flex flex-wrap align-items-center justify-content-md-end gap-3 mb-1">
-                            <a href="http://localhost:8080/h2-console" target="_blank" rel="noreferrer" className="footer-link">H2 Console</a>
+                            <a href={`${API_BASE_URL.replace('/api', '')}/h2-console`} target="_blank" rel="noreferrer" className="footer-link">H2 Console</a>
                             <span>•</span>
-                            <a href="http://localhost:8080/api/candidates" target="_blank" rel="noreferrer" className="footer-link">REST Endpoints</a>
+                            <a href={`${API_BASE_URL}/candidates`} target="_blank" rel="noreferrer" className="footer-link">REST Endpoints</a>
                             <span>•</span>
-                            <span className="text-secondary fw-semibold">Spring Boot & React 19</span>
+                            <span className="text-secondary fw-semibold">Spring Boot 3 & React 19</span>
                         </div>
                         <p className="mb-0 text-secondary" style={{ fontSize: '0.78rem' }}>
                             &copy; {new Date().getFullYear()} Recruitment Tracker Platform. All rights reserved.

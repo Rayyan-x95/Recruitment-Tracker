@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { API_BASE_URL } from '../api/axiosConfig';
 
 const Navbar = () => {
     const { user, logout } = useAuth();
@@ -144,15 +145,15 @@ const Navbar = () => {
                                         <p className="text-muted mb-0 small text-truncate" style={{ maxWidth: '220px' }}>{user.email}</p>
                                     </li>
                                     <li>
-                                        <a className="dropdown-item py-2 small d-flex align-items-center gap-2" href="http://localhost:8080/h2-console" target="_blank" rel="noreferrer" onClick={() => setDropdownOpen(false)}>
+                                        <a className="dropdown-item py-2 small d-flex align-items-center gap-2" href={`${API_BASE_URL.replace('/api', '')}/h2-console`} target="_blank" rel="noreferrer" onClick={() => setDropdownOpen(false)}>
                                             <i className="fa-solid fa-database text-muted"></i>
                                             <span>H2 Database Console</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a className="dropdown-item py-2 small d-flex align-items-center gap-2" href="http://localhost:8080/api/candidates" target="_blank" rel="noreferrer" onClick={() => setDropdownOpen(false)}>
+                                        <a className="dropdown-item py-2 small d-flex align-items-center gap-2" href={`${API_BASE_URL}/candidates`} target="_blank" rel="noreferrer" onClick={() => setDropdownOpen(false)}>
                                             <i className="fa-solid fa-code text-muted"></i>
-                                            <span>REST API Status</span>
+                                            <span>REST API Endpoints</span>
                                         </a>
                                     </li>
                                     <li><hr className="dropdown-divider my-1" /></li>
