@@ -132,7 +132,7 @@ const DashboardPage = () => {
                 <div>
                     <div className="d-flex align-items-center gap-2 mb-1">
                         <h3 className="fw-bold mb-0 text-dark">
-                            <i className="fa-solid fa-gauge-high text-primary me-2"></i>Recruitment Dashboard
+                            Recruitment Dashboard
                         </h3>
                         {renderRoleBadge(userRole)}
                     </div>
