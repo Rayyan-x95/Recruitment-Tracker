@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Submit Interview Feedback')}"></head>
+<body>
+
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+
+    <div class="container py-4" style="max-width: 750px;">
+
+        <div class="card card-custom">
+            <div class="card-header card-header-custom">
+                <span>Submit Candidate Evaluation & Feedback</span>
+                <a th:href="@{/interviews}" class="btn btn-sm btn-outline-secondary">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Back to Interviews
+                </a>
+            </div>
+
+            <div class="card-body p-4">
+
+                <form th:action="@{/feedbacks/save}" th:object="${feedback}" method="post" class="needs-validation" novalidate>
+                    <input type="hidden" th:field="*{id}">
+                    <input type="hidden" th:field="*{interviewId}">
+                    <input type="hidden" th:field="*{candidateId}">
+
+                    <!-- Context info -->
+                    <div class="alert alert-info border-0 rounded-3 mb-4">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div>
+                                <h6 class="fw-bold mb-1"><i class="fa-solid fa-circle-info me-2"></i>Interview Context</h6>
+                                <div class="small">
+                                    Candidate ID: <strong th:text="'#' + ${feedback.candidateId}">#1</strong> | 
+                                    Round: <strong th:text="${interview != null ? interview.roundType : 'N/A'}">ROUND</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interviewer Name -->
+                    <div class="mb-4">
+                        <label for="interviewerName" class="form-label fw-semibold">Evaluator / Interviewer Name *</label>
+                        <input type="text" class="form-control" id="interviewerName" th:field="*{interviewerName}" required>
+                    </div>
+
+                    <!-- Rating Criteria Grid -->
+                    <h6 class="fw-bold mb-3 text-dark border-bottom pb-2">Competency Rating Scores (1 - Lowest to 5 - Highest)</h6>
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-4">
+                            <label for="technicalRating" class="form-label fw-semibold">Technical Expertise *</label>
+                            <select class="form-select" id="technicalRating" th:field="*{technicalRating}" required>
+                                <option value="5">5 - Outstanding</option>
+                                <option value="4">4 - Above Average</option>
+                                <option value="3" selected>3 - Satisfactory</option>
+                                <option value="2">2 - Needs Improvement</option>
+                                <option value="1">1 - Unsatisfactory</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="communicationRating" class="form-label fw-semibold">Communication *</label>
+                            <select class="form-select" id="communicationRating" th:field="*{communicationRating}" required>
+                                <option value="5">5 - Outstanding</option>
+                                <option value="4">4 - Above Average</option>
+                                <option value="3" selected>3 - Satisfactory</option>
+                                <option value="2">2 - Needs Improvement</option>
+                                <option value="1">1 - Unsatisfactory</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="problemSolvingRating" class="form-label fw-semibold">Problem Solving *</label>
+                            <select class="form-select" id="problemSolvingRating" th:field="*{problemSolvingRating}" required>
+                                <option value="5">5 - Outstanding</option>
+                                <option value="4">4 - Above Average</option>
+                                <option value="3" selected>3 - Satisfactory</option>
+                                <option value="2">2 - Needs Improvement</option>
+                                <option value="1">1 - Unsatisfactory</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Overall Recommendation -->
+                    <div class="mb-4">
+                        <label for="overallRecommendation" class="form-label fw-semibold">Final Recommendation Decision *</label>
+                        <select class="form-select" id="overallRecommendation" th:field="*{overallRecommendation}" required>
+                            <option value="STRONG_HIRE">Strong Hire (Top Tier)</option>
+                            <option value="HIRE" selected>Hire (Meets Requirements)</option>
+                            <option value="HOLD">Hold (Requires Additional Review)</option>
+                            <option value="NO_HIRE">No Hire (Does Not Meet Bar)</option>
+                        </select>
+                    </div>
+
+                    <!-- Detailed Comments -->
+                    <div class="mb-4">
+                        <label for="comments" class="form-label fw-semibold">Detailed Evaluation & Notes</label>
+                        <textarea class="form-control" id="comments" th:field="*{comments}" rows="4" placeholder="Mention candidate's strengths, answers to coding/system design questions, domain knowledge, and areas of concern..."></textarea>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2">
+                        <a th:href="@{/interviews}" class="btn btn-outline-secondary px-4">Cancel</a>
+                        <button type="submit" class="btn btn-primary-custom px-4">
+                            <i class="fa-solid fa-paper-plane me-1"></i> Submit Feedback
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Candidate Profile')}"></head>
+<body>
+
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+
+    <div class="container-fluid px-lg-4 py-4" style="max-width: 1100px;">
+
+        <!-- Back & Action Header -->
+        <div class="d-flex flex-wrap align-items-center justify-content-between mb-4 gap-3">
+            <div>
+                <a th:href="@{/candidates}" class="text-decoration-none text-muted fw-semibold">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Back to Candidate Directory
+                </a>
+                <h3 class="fw-bold mb-1 text-dark mt-2" th:text="${candidate.fullName}">Candidate Name</h3>
+                <span class="badge badge-status"
+                      th:classappend="'badge-' + ${#strings.toLowerCase(candidate.status)}"
+                      th:text="${candidate.status}">STATUS</span>
+            </div>
+            <div class="d-flex gap-2">
+                <a th:if="${candidate.resumePath != null}" th:href="@{/candidates/{id}/resume/download(id=${candidate.id})}" class="btn btn-outline-primary fw-semibold rounded-3">
+                    <i class="fa-solid fa-download me-1"></i> Download Resume
+                </a>
+                <a th:href="@{/interviews/new(candidateId=${candidate.id})}" class="btn btn-primary-custom">
+                    <i class="fa-solid fa-calendar-plus me-1"></i> Schedule Interview
+                </a>
+                <a th:href="@{/offers/new(candidateId=${candidate.id})}" class="btn btn-success fw-semibold rounded-3 text-white">
+                    <i class="fa-solid fa-file-contract me-1"></i> Extend Offer
+                </a>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Left Info Panel -->
+            <div class="col-lg-5">
+                <div class="card card-custom mb-4">
+                    <div class="card-header card-header-custom">
+                        <span><i class="fa-solid fa-address-card me-2 text-primary"></i>Personal Information</span>
+                        <a th:href="@{/candidates/{id}/edit(id=${candidate.id})}" class="btn btn-sm btn-outline-secondary">
+                            <i class="fa-solid fa-pen-to-square"></i> Edit
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item px-0 d-flex justify-content-between">
+                                <span class="text-muted"><i class="fa-regular fa-envelope me-2"></i>Email</span>
+                                <strong class="text-dark" th:text="${candidate.email}">email</strong>
+                            </li>
+                            <li class="list-group-item px-0 d-flex justify-content-between">
+                                <span class="text-muted"><i class="fa-solid fa-phone me-2"></i>Phone</span>
+                                <strong class="text-dark" th:text="${candidate.phone}">phone</strong>
+                            </li>
+                            <li class="list-group-item px-0 d-flex justify-content-between">
+                                <span class="text-muted"><i class="fa-solid fa-briefcase me-2"></i>Target Role</span>
+                                <strong class="text-dark" th:text="${candidate.targetRole}">role</strong>
+                            </li>
+                            <li class="list-group-item px-0 d-flex justify-content-between">
+                                <span class="text-muted"><i class="fa-solid fa-building me-2"></i>Current Company</span>
+                                <strong class="text-dark" th:text="${candidate.currentCompany != null ? candidate.currentCompany : 'N/A'}">company</strong>
+                            </li>
+                            <li class="list-group-item px-0 d-flex justify-content-between">
+                                <span class="text-muted"><i class="fa-solid fa-user-clock me-2"></i>Experience</span>
+                                <strong class="text-dark" th:text="${candidate.yearsOfExperience} + ' Years'">0 Yrs</strong>
+                            </li>
+                            <li class="list-group-item px-0 d-flex justify-content-between" th:if="${candidate.expectedCtc != null}">
+                                <span class="text-muted"><i class="fa-solid fa-indian-rupee-sign me-2"></i>Expected CTC</span>
+                                <strong class="text-dark" th:text="'₹ ' + ${#numbers.formatDecimal(candidate.expectedCtc, 0, 'COMMA', 0, 'POINT')}">₹ 0</strong>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Skills Card -->
+                <div class="card card-custom">
+                    <div class="card-header card-header-custom">
+                        <span><i class="fa-solid fa-code me-2 text-indigo"></i>Technical Skills & Competencies</span>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text text-secondary mb-0" th:text="${candidate.skills}">Skills list</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel: Interview & Feedback History -->
+            <div class="col-lg-7">
+                <div class="card card-custom">
+                    <div class="card-header card-header-custom">
+                        <span><i class="fa-solid fa-timeline me-2 text-success"></i>Interview Schedule & Evaluation Log</span>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="list-group list-group-flush">
+                            <div th:each="interview : ${interviews}" class="list-group-item p-3">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <h6 class="fw-bold mb-0 text-dark">
+                                        <span class="badge bg-indigo text-white me-2" th:text="${interview.roundType}">ROUND</span>
+                                        Interviewer: <span th:text="${interview.interviewerName}">Interviewer</span>
+                                    </h6>
+                                    <span class="badge badge-status"
+                                          th:classappend="'badge-' + ${#strings.toLowerCase(interview.status)}"
+                                          th:text="${interview.status}">STATUS</span>
+                                </div>
+                                <div class="small text-muted mb-2">
+                                    <i class="fa-regular fa-clock me-1"></i> <span th:text="${#temporals.format(interview.scheduledAt, 'dd MMMM yyyy, hh:mm a')}">Date</span>
+                                    <span th:if="${interview.locationOrLink}" class="ms-3">
+                                        <i class="fa-solid fa-link me-1"></i> <a th:href="${interview.locationOrLink}" target="_blank" class="text-decoration-none">Meeting Link</a>
+                                    </span>
+                                </div>
+                                <p th:if="${interview.notes}" class="small text-secondary mb-2 bg-light p-2 rounded" th:text="${interview.notes}">Notes</p>
+                                
+                                <div class="d-flex gap-2">
+                                    <a th:href="@{/feedbacks/new(interviewId=${interview.id})}" class="btn btn-sm btn-outline-primary py-0 px-2 rounded-2">
+                                        <i class="fa-solid fa-plus me-1"></i> Submit Feedback
+                                    </a>
+                                    <a th:href="@{/feedbacks/interview/{id}(id=${interview.id})}" class="btn btn-sm btn-outline-secondary py-0 px-2 rounded-2">
+                                        <i class="fa-solid fa-eye me-1"></i> View Evaluation
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div th:if="${#lists.isEmpty(interviews)}" class="text-center text-muted py-5">
+                                <i class="fa-solid fa-calendar-xmark fs-2 mb-2 text-secondary"></i>
+                                <p class="mb-0">No interview rounds scheduled for this candidate yet.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

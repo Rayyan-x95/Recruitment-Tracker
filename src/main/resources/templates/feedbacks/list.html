@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Interview Feedbacks')}"></head>
+<body>
+
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+
+    <div class="container-fluid px-lg-4 py-4">
+
+        <div class="d-flex flex-wrap align-items-center justify-content-between mb-4 gap-3">
+            <div>
+                <h3 class="fw-bold mb-1 text-dark">
+                    <i class="fa-solid fa-comment-dots text-primary me-2"></i>Interview Evaluations & Feedback
+                </h3>
+                <p class="text-muted mb-0">Detailed rating scores, technical assessments, and final recommendations.</p>
+            </div>
+        </div>
+
+        <!-- Success Alert -->
+        <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+            <i class="fa-solid fa-circle-check me-2"></i> <span th:text="${successMessage}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <div class="card card-custom">
+            <div class="card-body p-0 table-responsive">
+                <table class="table table-custom align-middle">
+                    <thead>
+                        <tr>
+                            <th>Feedback ID</th>
+                            <th>Candidate ID</th>
+                            <th>Interviewer</th>
+                            <th>Technical Rating</th>
+                            <th>Communication Rating</th>
+                            <th>Problem Solving</th>
+                            <th>Average Rating</th>
+                            <th>Recommendation</th>
+                            <th class="text-end">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="fb : ${feedbacks}">
+                            <td class="fw-bold" th:text="'#' + ${fb.id}">#1</td>
+                            <td>
+                                <a th:href="@{/candidates/{id}(id=${fb.candidateId})}" class="fw-bold text-decoration-none text-dark" th:text="'Candidate #' + ${fb.candidateId}">Candidate</a>
+                            </td>
+                            <td th:text="${fb.interviewerName}">Interviewer</td>
+                            <td>
+                                <span class="badge bg-light text-dark border" th:text="${fb.technicalRating} + ' / 5'">5/5</span>
+                            </td>
+                            <td>
+                                <span class="badge bg-light text-dark border" th:text="${fb.communicationRating} + ' / 5'">5/5</span>
+                            </td>
+                            <td>
+                                <span class="badge bg-light text-dark border" th:text="${fb.problemSolvingRating} + ' / 5'">5/5</span>
+                            </td>
+                            <td>
+                                <strong class="text-indigo" th:text="${#numbers.formatDecimal(fb.averageScore, 1, 1)} + ' ★'">5.0 ★</strong>
+                            </td>
+                            <td>
+                                <span class="badge"
+                                      th:classappend="${fb.overallRecommendation == 'STRONG_HIRE' or fb.overallRecommendation == 'HIRE'} ? 'bg-success text-white' : (${fb.overallRecommendation == 'HOLD'} ? 'bg-warning text-dark' : 'bg-danger text-white')"
+                                      th:text="${fb.overallRecommendation}">RECOMMENDATION</span>
+                            </td>
+                            <td class="text-end">
+                                <a th:href="@{/feedbacks/interview/{id}(id=${fb.interviewId})}" class="btn btn-sm btn-outline-primary">
+                                    <i class="fa-solid fa-eye me-1"></i> View Details
+                                </a>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(feedbacks)}">
+                            <td colspan="9" class="text-center text-muted py-5">
+                                <i class="fa-solid fa-comments-question fs-2 mb-2 text-secondary"></i>
+                                <p class="mb-0 fw-semibold">No interview feedbacks recorded yet.</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

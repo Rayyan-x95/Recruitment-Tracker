@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark navbar-custom sticky-top">
+    <div class="container-fluid px-lg-4">
+        <a class="navbar-brand" th:href="@{/dashboard}">
+            <i class="fa-solid fa-briefcase"></i> RecTracker
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarMain">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/dashboard}" th:classappend="${#httpServletRequest != null and #httpServletRequest.requestURI == '/dashboard' ? 'active' : ''}">
+                        <i class="fa-solid fa-chart-line me-1"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/candidates}">
+                        <i class="fa-solid fa-users me-1"></i> Candidates
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/interviews}">
+                        <i class="fa-solid fa-calendar-check me-1"></i> Interviews
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/feedbacks}">
+                        <i class="fa-solid fa-comment-dots me-1"></i> Feedbacks
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/offers}">
+                        <i class="fa-solid fa-file-signature me-1"></i> Offers
+                    </a>
+                </li>
+            </ul>
+
+            <div class="d-flex align-items-center gap-3" th:if="${session.loggedUser != null}">
+                <div class="dropdown">
+                    <button class="btn user-dropdown-btn dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <i class="fa-solid fa-circle-user me-1"></i> 
+                        <span th:text="${session.loggedUser.fullName}">User</span>
+                        <span class="badge bg-indigo ms-1 text-uppercase" th:text="${session.loggedUser.role}">ROLE</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+                        <li>
+                            <div class="dropdown-header">
+                                <strong th:text="${session.loggedUser.email}">user@email.com</strong>
+                            </div>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item text-danger" th:href="@{/logout}">
+                                <i class="fa-solid fa-right-from-bracket me-2"></i> Logout
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="d-flex gap-2" th:if="${session.loggedUser == null}">
+                <a th:href="@{/login}" class="btn btn-outline-light btn-sm px-3">Login</a>
+                <a th:href="@{/register}" class="btn btn-light btn-sm px-3 fw-semibold">Register</a>
+            </div>
+        </div>
+    </div>
+</nav>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head(${offer.id == null ? 'Issue Job Offer' : 'Edit Job Offer'})}"></head>
+<body>
+
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+
+    <div class="container py-4" style="max-width: 700px;">
+
+        <div class="card card-custom">
+            <div class="card-header card-header-custom">
+                <span th:text="${offer.id == null ? 'Issue New Job Offer' : 'Edit Job Offer Details'}">Issue Job Offer</span>
+                <a th:href="@{/offers}" class="btn btn-sm btn-outline-secondary">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Back to Offers List
+                </a>
+            </div>
+
+            <div class="card-body p-4">
+
+                <form th:action="@{/offers/save}" th:object="${offer}" method="post" class="needs-validation" novalidate>
+                    <input type="hidden" th:field="*{id}">
+
+                    <!-- Candidate Selection -->
+                    <div class="mb-3">
+                        <label for="candidateId" class="form-label fw-semibold">Select Candidate *</label>
+                        <select class="form-select" id="candidateId" th:field="*{candidateId}" required>
+                            <option value="">-- Select Candidate --</option>
+                            <option th:each="c : ${candidates}"
+                                    th:value="${c.id}"
+                                    th:text="${c.fullName} + ' (' + ${c.targetRole} + ' - ' + ${c.email} + ')'">
+                                Candidate Name
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label for="jobTitle" class="form-label fw-semibold">Offered Job Title *</label>
+                            <input type="text" class="form-control" id="jobTitle" th:field="*{jobTitle}" placeholder="e.g. Senior Java Engineer" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="department" class="form-label fw-semibold">Department *</label>
+                            <input type="text" class="form-control" id="department" th:field="*{department}" placeholder="e.g. Engineering / Product" required>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label for="baseSalary" class="form-label fw-semibold">Offered Base Salary (₹ / Annum) *</label>
+                            <input type="number" step="10000" min="1" class="form-control" id="baseSalary" th:field="*{baseSalary}" placeholder="e.g. 1500000" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="status" class="form-label fw-semibold">Offer Status</label>
+                            <select class="form-select" id="status" th:field="*{status}">
+                                <option value="PENDING">Pending Candidate Decision</option>
+                                <option value="ACCEPTED">Accepted</option>
+                                <option value="REJECTED">Rejected</option>
+                                <option value="EXPIRED">Expired</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label for="joiningDate" class="form-label fw-semibold">Expected Joining Date *</label>
+                            <input type="date" class="form-control" id="joiningDate" th:field="*{joiningDate}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="validUntil" class="form-label fw-semibold">Offer Expiry Date *</label>
+                            <input type="date" class="form-control" id="validUntil" th:field="*{validUntil}" required>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2">
+                        <a th:href="@{/offers}" class="btn btn-outline-secondary px-4">Cancel</a>
+                        <button type="submit" class="btn btn-primary-custom px-4">
+                            <i class="fa-solid fa-file-contract me-1"></i> Save & Generate Offer
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Register')}"></head>
+<body class="auth-container">
+
+    <div class="auth-card">
+        <div class="auth-brand">
+            <i class="fa-solid fa-user-plus text-indigo me-2"></i>Create Account
+        </div>
+        <div class="auth-subtitle">Join the Recruitment Management Portal</div>
+
+        <!-- Error Alert -->
+        <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+            <i class="fa-solid fa-triangle-exclamation me-2"></i> <span th:text="${errorMessage}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <form th:action="@{/register}" th:object="${user}" method="post" class="needs-validation" novalidate>
+            <div class="mb-3">
+                <label for="fullName" class="form-label fw-semibold">Full Name</label>
+                <input type="text" class="form-control" id="fullName" th:field="*{fullName}" placeholder="e.g. John Doe" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label fw-semibold">Email Address</label>
+                <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="john.doe@example.com" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="username" class="form-label fw-semibold">Username</label>
+                <input type="text" class="form-control" id="username" th:field="*{username}" placeholder="johndoe" required minlength="3">
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label fw-semibold">Password</label>
+                <input type="password" class="form-control" id="password" th:field="*{password}" placeholder="At least 6 characters" required minlength="6">
+            </div>
+
+            <div class="mb-4">
+                <label for="role" class="form-label fw-semibold">User Role</label>
+                <select class="form-select" id="role" th:field="*{role}" required>
+                    <option value="RECRUITER">Recruiter</option>
+                    <option value="INTERVIEWER">Hiring Manager / Interviewer</option>
+                    <option value="ADMIN">Administrator</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary-custom w-100 py-2 mb-3">
+                Register Account <i class="fa-solid fa-arrow-right ms-1"></i>
+            </button>
+        </form>
+
+        <div class="text-center">
+            <span class="text-muted">Already registered?</span>
+            <a th:href="@{/login}" class="fw-bold text-decoration-none text-indigo ms-1">Sign in here</a>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

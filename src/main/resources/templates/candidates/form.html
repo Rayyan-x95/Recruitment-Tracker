@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head(${candidate.id == null ? 'Register Candidate' : 'Edit Candidate'})}"></head>
+<body>
+
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+
+    <div class="container py-4" style="max-width: 800px;">
+
+        <!-- Card Header -->
+        <div class="card card-custom">
+            <div class="card-header card-header-custom">
+                <span th:text="${candidate.id == null ? 'Register New Candidate' : 'Edit Candidate Profile'}">Register Candidate</span>
+                <a th:href="@{/candidates}" class="btn btn-sm btn-outline-secondary">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Back to Directory
+                </a>
+            </div>
+
+            <div class="card-body p-4">
+
+                <!-- Error Alert -->
+                <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+                    <i class="fa-solid fa-triangle-exclamation me-2"></i> <span th:text="${errorMessage}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+
+                <form th:action="@{/candidates/save}" th:object="${candidate}" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                    <input type="hidden" th:field="*{id}">
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label for="fullName" class="form-label fw-semibold">Full Name *</label>
+                            <input type="text" class="form-control" id="fullName" th:field="*{fullName}" placeholder="e.g. Aarav Sharma" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="email" class="form-label fw-semibold">Email Address *</label>
+                            <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="aarav.sharma@example.com" required>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label for="phone" class="form-label fw-semibold">Phone Number *</label>
+                            <input type="text" class="form-control" id="phone" th:field="*{phone}" placeholder="+91 9876543210" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="yearsOfExperience" class="form-label fw-semibold">Years of Experience *</label>
+                            <input type="number" step="0.1" min="0" class="form-control" id="yearsOfExperience" th:field="*{yearsOfExperience}" placeholder="e.g. 4.5" required>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label for="targetRole" class="form-label fw-semibold">Target Job Role *</label>
+                            <input type="text" class="form-control" id="targetRole" th:field="*{targetRole}" placeholder="e.g. Senior Java Developer" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="currentCompany" class="form-label fw-semibold">Current / Previous Company</label>
+                            <input type="text" class="form-control" id="currentCompany" th:field="*{currentCompany}" placeholder="e.g. TCS Tech Solutions">
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label for="expectedCtc" class="form-label fw-semibold">Expected CTC (₹ / Annum)</label>
+                            <input type="number" step="10000" class="form-control" id="expectedCtc" th:field="*{expectedCtc}" placeholder="e.g. 1400000">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="status" class="form-label fw-semibold">Pipeline Status</label>
+                            <select class="form-select" id="status" th:field="*{status}">
+                                <option value="APPLIED">Applied</option>
+                                <option value="SCREENING">Screening</option>
+                                <option value="INTERVIEWING">Interviewing</option>
+                                <option value="OFFERED">Offered</option>
+                                <option value="HIRED">Hired</option>
+                                <option value="REJECTED">Rejected</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="skills" class="form-label fw-semibold">Key Skills (Comma Separated) *</label>
+                        <textarea class="form-control" id="skills" th:field="*{skills}" rows="3" placeholder="Java 21, Spring Boot, MySQL, REST APIs, Microservices" required></textarea>
+                    </div>
+
+                    <!-- File Upload -->
+                    <div class="mb-4">
+                        <label for="resumeFile" class="form-label fw-semibold">
+                            Resume Attachment (PDF / DOCX / TXT)
+                        </label>
+                        <input type="file" class="form-control" id="resumeFile" name="resumeFile" accept=".pdf,.doc,.docx,.txt">
+                        <small class="text-muted" th:if="${candidate.resumeFilename != null}">
+                            Current resume: <strong th:text="${candidate.resumeFilename}">resume.pdf</strong>
+                        </small>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2">
+                        <a th:href="@{/candidates}" class="btn btn-outline-secondary px-4">Cancel</a>
+                        <button type="submit" class="btn btn-primary-custom px-4">
+                            <i class="fa-solid fa-floppy-disk me-1"></i> Save Candidate Profile
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>

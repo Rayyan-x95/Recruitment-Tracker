@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Login')}"></head>
+<body class="auth-container">
+
+    <div class="auth-card">
+        <div class="auth-brand">
+            <i class="fa-solid fa-briefcase text-indigo me-2"></i>RecTracker
+        </div>
+        <div class="auth-subtitle">Sign in to your Recruitment Portal</div>
+
+        <!-- Success Alert -->
+        <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+            <i class="fa-solid fa-circle-check me-2"></i> <span th:text="${successMessage}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <!-- Error Alert -->
+        <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show mb-4" role="alert">
+            <i class="fa-solid fa-triangle-exclamation me-2"></i> <span th:text="${errorMessage}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <form th:action="@{/login}" method="post" class="needs-validation" novalidate>
+            <div class="mb-3">
+                <label for="username" class="form-label fw-semibold">Username</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light"><i class="fa-solid fa-user text-muted"></i></span>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="e.g. admin" required>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label for="password" class="form-label fw-semibold">Password</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light"><i class="fa-solid fa-lock text-muted"></i></span>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="••••••••" required>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary-custom w-100 py-2 mb-3">
+                Sign In <i class="fa-solid fa-right-to-bracket ms-1"></i>
+            </button>
+        </form>
+
+        <div class="text-center mt-3">
+            <span className="text-muted">Don't have an account?</span>
+            <a th:href="@{/register}" class="fw-bold text-decoration-none text-indigo ms-1">Register here</a>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

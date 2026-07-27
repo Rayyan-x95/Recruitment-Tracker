@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head(${interview.id == null ? 'Schedule Interview' : 'Edit Interview'})}"></head>
+<body>
+
+    <nav th:replace="~{fragments/navbar :: navbar}"></nav>
+
+    <div class="container py-4" style="max-width: 700px;">
+
+        <div class="card card-custom">
+            <div class="card-header card-header-custom">
+                <span th:text="${interview.id == null ? 'Schedule Interview Round' : 'Update Interview Schedule'}">Schedule Interview</span>
+                <a th:href="@{/interviews}" class="btn btn-sm btn-outline-secondary">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Back to List
+                </a>
+            </div>
+
+            <div class="card-body p-4">
+
+                <form th:action="@{/interviews/save}" th:object="${interview}" method="post" class="needs-validation" novalidate>
+                    <input type="hidden" th:field="*{id}">
+
+                    <!-- Candidate Selection -->
+                    <div class="mb-3">
+                        <label for="candidateId" class="form-label fw-semibold">Select Candidate *</label>
+                        <select class="form-select" id="candidateId" th:field="*{candidateId}" required>
+                            <option value="">-- Choose Candidate --</option>
+                            <option th:each="c : ${candidates}"
+                                    th:value="${c.id}"
+                                    th:text="${c.fullName} + ' (' + ${c.targetRole} + ' - ' + ${c.email} + ')'">
+                                Candidate Name
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <!-- Round Type -->
+                        <div class="col-md-6">
+                            <label for="roundType" class="form-label fw-semibold">Interview Round Type *</label>
+                            <select class="form-select" id="roundType" th:field="*{roundType}" required>
+                                <option value="HR">HR Screening</option>
+                                <option value="TECHNICAL_1">Technical Round 1</option>
+                                <option value="TECHNICAL_2">Technical Round 2</option>
+                                <option value="SYSTEM_DESIGN">System Design / Architecture</option>
+                                <option value="MANAGERIAL">Managerial & Culture Fit</option>
+                            </select>
+                        </div>
+                        <!-- Interviewer Name -->
+                        <div class="col-md-6">
+                            <label for="interviewerName" class="form-label fw-semibold">Interviewer Name *</label>
+                            <input type="text" class="form-control" id="interviewerName" th:field="*{interviewerName}" placeholder="e.g. David Kim" required>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <!-- Scheduled Time -->
+                        <div class="col-md-6">
+                            <label for="scheduledAt" class="form-label fw-semibold">Date & Time *</label>
+                            <input type="datetime-local" class="form-control" id="scheduledAt" th:field="*{scheduledAt}" required>
+                        </div>
+                        <!-- Status -->
+                        <div class="col-md-6">
+                            <label for="status" class="form-label fw-semibold">Status</label>
+                            <select class="form-select" id="status" th:field="*{status}">
+                                <option value="SCHEDULED">Scheduled</option>
+                                <option value="COMPLETED">Completed</option>
+                                <option value="PASSED">Passed</option>
+                                <option value="FAILED">Failed</option>
+                                <option value="CANCELLED">Cancelled</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Meeting Link / Location -->
+                    <div class="mb-3">
+                        <label for="locationOrLink" class="form-label fw-semibold">Meeting URL / Room Location</label>
+                        <input type="text" class="form-control" id="locationOrLink" th:field="*{locationOrLink}" placeholder="https://meet.google.com/abc-defg-hij or Conference Room 4B">
+                    </div>
+
+                    <!-- Notes -->
+                    <div class="mb-4">
+                        <label for="notes" class="form-label fw-semibold">Interview Instructions / Agenda</label>
+                        <textarea class="form-control" id="notes" th:field="*{notes}" rows="3" placeholder="Topics to cover: Data structures, Concurrency, Spring Data JPA, SQL query optimization..."></textarea>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2">
+                        <a th:href="@{/interviews}" class="btn btn-outline-secondary px-4">Cancel</a>
+                        <button type="submit" class="btn btn-primary-custom px-4">
+                            <i class="fa-solid fa-calendar-check me-1"></i> Save Interview Schedule
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>
