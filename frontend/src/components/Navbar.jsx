@@ -139,26 +139,77 @@ const Navbar = () => {
                                     <i className={`fa-solid fa-chevron-down text-muted fs-xs ms-1 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`}></i>
                                 </button>
 
-                                <ul className={`dropdown-menu dropdown-menu-end dropdown-menu-minimal shadow border mt-2 ${dropdownOpen ? 'show' : ''}`} style={{ position: 'absolute', right: 0, top: '100%', zIndex: 1050 }}>
+                                <ul className={`dropdown-menu dropdown-menu-end dropdown-menu-minimal shadow-lg border mt-2 ${dropdownOpen ? 'show' : ''}`} style={{ position: 'absolute', right: 0, top: '100%', zIndex: 1050, minWidth: '260px' }}>
+                                    {/* User Header */}
                                     <li className="px-3 py-2 border-bottom bg-light-subtle">
-                                        <p className="fw-semibold mb-0 text-dark small">{user.fullName}</p>
-                                        <p className="text-muted mb-0 small text-truncate" style={{ maxWidth: '220px' }}>{user.email}</p>
+                                        <div className="d-flex align-items-center justify-content-between mb-1">
+                                            <span className="fw-bold text-dark small">{user.fullName || user.username}</span>
+                                            <span className="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-2 py-0.5" style={{ fontSize: '0.65rem' }}>
+                                                {user.role || 'ADMIN'}
+                                            </span>
+                                        </div>
+                                        <p className="text-muted mb-0 small text-truncate" style={{ maxWidth: '230px', fontSize: '0.78rem' }}>{user.email}</p>
+                                    </li>
+
+                                    {/* Quick Workplace Actions Section */}
+                                    <li className="dropdown-header text-uppercase text-muted fw-bold px-3 pt-2 pb-1" style={{ fontSize: '0.65rem', letterSpacing: '0.5px' }}>
+                                        Quick Actions
+                                    </li>
+                                    <li>
+                                        <Link className="dropdown-item py-2 small d-flex align-items-center gap-2" to="/candidates/new" onClick={() => setDropdownOpen(false)}>
+                                            <i className="fa-solid fa-user-plus text-primary"></i>
+                                            <span>Register Candidate</span>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link className="dropdown-item py-2 small d-flex align-items-center gap-2" to="/interviews" onClick={() => setDropdownOpen(false)}>
+                                            <i className="fa-solid fa-calendar-plus text-info"></i>
+                                            <span>Schedule Interview</span>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link className="dropdown-item py-2 small d-flex align-items-center gap-2" to="/feedbacks" onClick={() => setDropdownOpen(false)}>
+                                            <i className="fa-solid fa-clipboard-check text-warning"></i>
+                                            <span>Submit Scorecard</span>
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link className="dropdown-item py-2 small d-flex align-items-center gap-2" to="/offers" onClick={() => setDropdownOpen(false)}>
+                                            <i className="fa-solid fa-file-signature text-success"></i>
+                                            <span>Generate Job Offer</span>
+                                        </Link>
+                                    </li>
+
+                                    <li><hr className="dropdown-divider my-1" /></li>
+
+                                    {/* System & Developer Tools Section */}
+                                    <li className="dropdown-header text-uppercase text-muted fw-bold px-3 pt-1 pb-1" style={{ fontSize: '0.65rem', letterSpacing: '0.5px' }}>
+                                        Developer & System Tools
                                     </li>
                                     <li>
                                         <a className="dropdown-item py-2 small d-flex align-items-center gap-2" href={`${API_BASE_URL.replace('/api', '')}/h2-console`} target="_blank" rel="noreferrer" onClick={() => setDropdownOpen(false)}>
-                                            <i className="fa-solid fa-database text-muted"></i>
+                                            <i className="fa-solid fa-database text-secondary"></i>
                                             <span>H2 Database Console</span>
                                         </a>
                                     </li>
                                     <li>
                                         <a className="dropdown-item py-2 small d-flex align-items-center gap-2" href={`${API_BASE_URL}/candidates`} target="_blank" rel="noreferrer" onClick={() => setDropdownOpen(false)}>
-                                            <i className="fa-solid fa-code text-muted"></i>
+                                            <i className="fa-solid fa-code text-secondary"></i>
                                             <span>REST API Endpoints</span>
                                         </a>
                                     </li>
-                                    <li><hr className="dropdown-divider my-1" /></li>
                                     <li>
-                                        <button className="dropdown-item py-2 small text-danger d-flex align-items-center gap-2" onClick={handleLogout}>
+                                        <a className="dropdown-item py-2 small d-flex align-items-center gap-2" href="https://ninety5.in" target="_blank" rel="noreferrer" onClick={() => setDropdownOpen(false)}>
+                                            <i className="fa-solid fa-globe text-primary"></i>
+                                            <span>Ninety5.in Platform</span>
+                                        </a>
+                                    </li>
+
+                                    <li><hr className="dropdown-divider my-1" /></li>
+
+                                    {/* Sign Out Section */}
+                                    <li>
+                                        <button className="dropdown-item py-2 small text-danger fw-semibold d-flex align-items-center gap-2" onClick={handleLogout}>
                                             <i className="fa-solid fa-arrow-right-from-bracket"></i>
                                             <span>Sign Out</span>
                                         </button>
